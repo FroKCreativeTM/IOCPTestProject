@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "IOCPTestProject.h"
 #include "GameFramework/GameModeBase.h"
 #include "IOCPTestProjectGameMode.generated.h"
 
