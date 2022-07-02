@@ -66,5 +66,12 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+public : 
+	void SetPlayerId(uint64 id) { _playerId = id; }
+	uint64 GetPlayerId() const { return _playerId; }
+
+private : 
+	uint64					_playerId;
 };
 
