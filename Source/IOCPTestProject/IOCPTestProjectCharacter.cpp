@@ -8,6 +8,9 @@
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
 
+#include "Network/GameSessionManager.h"
+#include "Network/ServerPacketHandler.h"
+
 //////////////////////////////////////////////////////////////////////////
 // AIOCPTestProjectCharacter
 
@@ -49,6 +52,12 @@ AIOCPTestProjectCharacter::AIOCPTestProjectCharacter()
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
+
+}
+
+AIOCPTestProjectCharacter::~AIOCPTestProjectCharacter()
+{
+	AGameSessionManager::GetInst()->CloseSocket();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -99,6 +108,21 @@ void AIOCPTestProjectCharacter::LookUpAtRate(float Rate)
 	AddControllerPitchInput(Rate * TurnRateGamepad * GetWorld()->GetDeltaSeconds());
 }
 
+void AIOCPTestProjectCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+
+	AGameSessionManager::GetInst()->StartService();
+	AGameSessionManager::GetInst()->Dispatch();
+}
+
+void AIOCPTestProjectCharacter::EndPlay(EEndPlayReason::Type eEndPlayType)
+{
+	Super::EndPlay(eEndPlayType);
+
+	AGameSessionManager::GetInst()->CloseSocket();
+}
+
 void AIOCPTestProjectCharacter::MoveForward(float Value)
 {
 	if ((Controller != nullptr) && (Value != 0.0f))
@@ -110,6 +134,31 @@ void AIOCPTestProjectCharacter::MoveForward(float Value)
 		// get forward vector
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 		AddMovementInput(Direction, Value);
+
+		if (AGameSessionManager::GetInst() != nullptr)
+		{
+			const FVector Position = GetActorLocation();
+			const FVector Velocity = GetVelocity();
+
+			Protocol::C_MOVE movePkt;
+
+			auto pos = movePkt.mutable_posinfo();
+			pos->set_posx(Position.X);
+			pos->set_posy(Position.Y);
+			pos->set_posz(Position.Z);
+
+			pos->set_yaw(Rotation.Yaw);
+			pos->set_pitch(Rotation.Pitch);
+			pos->set_roll(Rotation.Roll);
+
+			pos->set_velox(Velocity.X);
+			pos->set_veloy(Velocity.Y);
+			pos->set_veloz(Velocity.Z);
+
+			auto sendBuffer = FrokEngine::ServerPacketHandler::MakeSendBuffer(movePkt);
+			AGameSessionManager::GetInst()->GetService()->Broadcast(sendBuffer);
+			AGameSessionManager::GetInst()->Dispatch();
+		}
 	}
 }
 
@@ -125,5 +174,30 @@ void AIOCPTestProjectCharacter::MoveRight(float Value)
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 		// add movement in that direction
 		AddMovementInput(Direction, Value);
+
+		if (AGameSessionManager::GetInst() != nullptr)
+		{
+			const FVector Position = GetActorLocation();
+			const FVector Velocity = GetVelocity();
+
+			Protocol::C_MOVE movePkt;
+
+			auto pos = movePkt.mutable_posinfo();
+			pos->set_posx(Position.X);
+			pos->set_posy(Position.Y);
+			pos->set_posz(Position.Z);
+
+			pos->set_yaw(Rotation.Yaw);
+			pos->set_pitch(Rotation.Pitch);
+			pos->set_roll(Rotation.Roll);
+
+			pos->set_velox(Velocity.X);
+			pos->set_veloy(Velocity.Y);
+			pos->set_veloz(Velocity.Z);
+
+			auto sendBuffer = FrokEngine::ServerPacketHandler::MakeSendBuffer(movePkt);
+			AGameSessionManager::GetInst()->GetService()->Broadcast(sendBuffer);
+			AGameSessionManager::GetInst()->Dispatch();
+		}
 	}
 }

@@ -12,6 +12,8 @@ namespace FrokEngine
 	void ServerSession::OnConnected() 
 	{
 		Protocol::C_LOGIN pkt;
+		pkt.set_id("test");
+		pkt.set_password("testpassword");
 		auto sendBuffer = FrokEngine::ServerPacketHandler::MakeSendBuffer(pkt);
 		Send(sendBuffer);
 	}

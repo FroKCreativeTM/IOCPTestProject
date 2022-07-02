@@ -42,10 +42,14 @@ public:
 		_inst = nullptr;
 	}
 
+	FrokEngine::ClientServiceRef GetService() { return _service; }
+
 public:	
 	bool StartService();
 	void CloseSocket();
 	void Dispatch();
+
+	
 
 private : 
 	static TSharedPtr<AGameSessionManager>			_inst;

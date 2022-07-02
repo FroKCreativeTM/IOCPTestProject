@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "IOCPTestProject.h"
 #include "GameFramework/Character.h"
 #include "IOCPTestProjectCharacter.generated.h"
 
@@ -20,12 +20,17 @@ class AIOCPTestProjectCharacter : public ACharacter
 	class UCameraComponent* FollowCamera;
 public:
 	AIOCPTestProjectCharacter();
+	~AIOCPTestProjectCharacter();
 
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Input)
 	float TurnRateGamepad;
 
-protected:
+public :
+	virtual void BeginPlay() override;
+	virtual void EndPlay(EEndPlayReason::Type eEndPlayType) override;
+
+protected :
 
 	/** Called for forwards/backward input */
 	void MoveForward(float Value);
