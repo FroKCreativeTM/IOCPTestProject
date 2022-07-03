@@ -5,6 +5,8 @@
 #include "../IOCPTestProject.h"
 #include "../IOCPTestProjectCharacter.h"
 
+#include "../ObjectManager.h"
+
 namespace FrokEngine
 {
 	PacketHandlerFunc GPacketHandler[UINT16_MAX];
@@ -50,6 +52,7 @@ namespace FrokEngine
 	bool Handle_S_ENTER_GAME(PacketSessionRef& session, Protocol::S_ENTER_GAME& pkt)
 	{
 		// TODO : 이미 들어온 사람들에 대한 리스트를 받아온다.
+		GObjectManager->AddPlayer(pkt.player(), true);
 
 		return true;
 	}

@@ -67,11 +67,22 @@ public:
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 
+public:
+	// 스폰시킬 다른 캐릭터
+	UPROPERTY(EditAnywhere, Category = "Spawning")
+	TSubclassOf<class ACharacter> WhoToSpawn;
+
 public : 
 	void SetPlayerId(uint64 id) { _playerId = id; }
 	uint64 GetPlayerId() const { return _playerId; }
 
+public : 
+	// 플레이어 스텟에 대한 정보
+	void SetPlayerHealth(float health) { _health = health; }
+	float GetPlayerHealth() const { return _health; }
+
 private : 
 	uint64					_playerId;
+	float					_health;
 };
 

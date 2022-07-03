@@ -8,6 +8,8 @@
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
 
+#include "ObjectManager.h"
+
 #include "Network/GameSessionManager.h"
 #include "Network/ServerPacketHandler.h"
 
@@ -111,6 +113,9 @@ void AIOCPTestProjectCharacter::LookUpAtRate(float Rate)
 void AIOCPTestProjectCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	// 플레이어 캐릭터가 생성되면서, 오브젝트 매니저에 이 플레이어를 등록한다.
+	GObjectManager = MakeShared<AObjectManager>(this);
 
 	AGameSessionManager::GetInst()->StartService();
 	AGameSessionManager::GetInst()->Dispatch();

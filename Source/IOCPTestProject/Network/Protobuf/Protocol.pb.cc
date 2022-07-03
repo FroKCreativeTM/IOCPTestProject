@@ -72,7 +72,7 @@ namespace Protocol {
     PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT S_SIGNUPDefaultTypeInternal _S_SIGNUP_default_instance_;
     constexpr C_ENTER_GAME::C_ENTER_GAME(
         ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
-        : player_(nullptr) {}
+        : playerindex_(uint64_t{ 0u }) {}
     struct C_ENTER_GAMEDefaultTypeInternal {
         constexpr C_ENTER_GAMEDefaultTypeInternal()
             : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
@@ -84,7 +84,7 @@ namespace Protocol {
     PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT C_ENTER_GAMEDefaultTypeInternal _C_ENTER_GAME_default_instance_;
     constexpr S_ENTER_GAME::S_ENTER_GAME(
         ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
-        : success_(false) {}
+        : player_(nullptr) {}
     struct S_ENTER_GAMEDefaultTypeInternal {
         constexpr S_ENTER_GAMEDefaultTypeInternal()
             : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
@@ -211,14 +211,14 @@ const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::Protocol::C_ENTER_GAME, player_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::C_ENTER_GAME, playerindex_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protocol::S_ENTER_GAME, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::Protocol::S_ENTER_GAME, success_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_ENTER_GAME, player_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protocol::C_CURRENT_PLAYER_INFO, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -300,17 +300,17 @@ const char descriptor_table_protodef_Protocol_2eproto[] PROTOBUF_SECTION_VARIABL
 "assword\030\002 \001(\t\"=\n\007S_LOGIN\022\017\n\007success\030\001 \001("
 "\010\022!\n\007players\030\002 \003(\0132\020.Protocol.Player\"(\n\010"
 "C_SIGNUP\022\n\n\002id\030\001 \001(\t\022\020\n\010password\030\002 \001(\t\"\033"
-"\n\010S_SIGNUP\022\017\n\007success\030\001 \001(\010\"0\n\014C_ENTER_G"
-"AME\022 \n\006player\030\001 \001(\0132\020.Protocol.Player\"\037\n"
-"\014S_ENTER_GAME\022\017\n\007success\030\001 \001(\010\"9\n\025C_CURR"
-"ENT_PLAYER_INFO\022 \n\006player\030\001 \001(\0132\020.Protoc"
-"ol.Player\":\n\025S_CURRENT_PLAYER_INFO\022!\n\007pl"
-"ayers\030\001 \003(\0132\020.Protocol.Player\"\025\n\006C_CHAT\022"
-"\013\n\003msg\030\001 \001(\t\"\'\n\006S_CHAT\022\020\n\010playerId\030\001 \001(\004"
-"\022\013\n\003msg\030\002 \001(\t\",\n\006C_MOVE\022\"\n\007posInfo\030\001 \001(\013"
-"2\021.Protocol.PosInfo\">\n\006S_MOVE\022\020\n\010playerI"
-"d\030\001 \001(\004\022\"\n\007posInfo\030\002 \001(\0132\021.Protocol.PosI"
-"nfob\006proto3"
+"\n\010S_SIGNUP\022\017\n\007success\030\001 \001(\010\"#\n\014C_ENTER_G"
+"AME\022\023\n\013playerIndex\030\001 \001(\004\"4\n\014S_ENTER_GAME"
+"\022$\n\006player\030\001 \001(\0132\024.Protocol.ObjectInfo\"9"
+"\n\025C_CURRENT_PLAYER_INFO\022 \n\006player\030\001 \001(\0132"
+"\020.Protocol.Player\":\n\025S_CURRENT_PLAYER_IN"
+"FO\022!\n\007players\030\001 \003(\0132\020.Protocol.Player\"\025\n"
+"\006C_CHAT\022\013\n\003msg\030\001 \001(\t\"\'\n\006S_CHAT\022\020\n\010player"
+"Id\030\001 \001(\004\022\013\n\003msg\030\002 \001(\t\",\n\006C_MOVE\022\"\n\007posIn"
+"fo\030\001 \001(\0132\021.Protocol.PosInfo\">\n\006S_MOVE\022\020\n"
+"\010playerId\030\001 \001(\004\022\"\n\007posInfo\030\002 \001(\0132\021.Proto"
+"col.PosInfob\006proto3"
 ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable* const descriptor_table_Protocol_2eproto_deps[2] = {
   &::descriptor_table_Enum_2eproto,
@@ -318,7 +318,7 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable* const descripto
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_Protocol_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Protocol_2eproto = {
-  false, false, 611, descriptor_table_protodef_Protocol_2eproto, "Protocol.proto",
+  false, false, 619, descriptor_table_protodef_Protocol_2eproto, "Protocol.proto",
   &descriptor_table_Protocol_2eproto_once, descriptor_table_Protocol_2eproto_deps, 2, 12,
   schemas, file_default_instances, TableStruct_Protocol_2eproto::offsets,
   file_level_metadata_Protocol_2eproto, file_level_enum_descriptors_Protocol_2eproto, file_level_service_descriptors_Protocol_2eproto,
@@ -1238,19 +1238,8 @@ namespace Protocol {
 
     class C_ENTER_GAME::_Internal {
     public:
-        static const ::Protocol::Player& player(const C_ENTER_GAME* msg);
     };
 
-    const ::Protocol::Player&
-        C_ENTER_GAME::_Internal::player(const C_ENTER_GAME* msg) {
-        return *msg->player_;
-    }
-    void C_ENTER_GAME::clear_player() {
-        if (GetArenaForAllocation() == nullptr && player_ != nullptr) {
-            delete player_;
-        }
-        player_ = nullptr;
-    }
     C_ENTER_GAME::C_ENTER_GAME(::PROTOBUF_NAMESPACE_ID::Arena* arena,
         bool is_message_owned)
         : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
@@ -1263,17 +1252,12 @@ namespace Protocol {
     C_ENTER_GAME::C_ENTER_GAME(const C_ENTER_GAME& from)
         : ::PROTOBUF_NAMESPACE_ID::Message() {
         _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-        if (from._internal_has_player()) {
-            player_ = new ::Protocol::Player(*from.player_);
-        }
-        else {
-            player_ = nullptr;
-        }
+        playerindex_ = from.playerindex_;
         // @@protoc_insertion_point(copy_constructor:Protocol.C_ENTER_GAME)
     }
 
     inline void C_ENTER_GAME::SharedCtor() {
-        player_ = nullptr;
+        playerindex_ = uint64_t{ 0u };
     }
 
     C_ENTER_GAME::~C_ENTER_GAME() {
@@ -1285,7 +1269,6 @@ namespace Protocol {
 
     inline void C_ENTER_GAME::SharedDtor() {
         GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-        if (this != internal_default_instance()) delete player_;
     }
 
     void C_ENTER_GAME::ArenaDtor(void* object) {
@@ -1304,10 +1287,7 @@ namespace Protocol {
         // Prevent compiler warnings about cached_has_bits being unused
         (void)cached_has_bits;
 
-        if (GetArenaForAllocation() == nullptr && player_ != nullptr) {
-            delete player_;
-        }
-        player_ = nullptr;
+        playerindex_ = uint64_t{ 0u };
         _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
     }
 
@@ -1317,10 +1297,10 @@ namespace Protocol {
             uint32_t tag;
             ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
             switch (tag >> 3) {
-                // .Protocol.Player player = 1;
+                // uint64 playerIndex = 1;
             case 1:
-                if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-                    ptr = ctx->ParseMessage(_internal_mutable_player(), ptr);
+                if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+                    playerindex_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
                     CHK_(ptr);
                 }
                 else
@@ -1355,12 +1335,10 @@ namespace Protocol {
         uint32_t cached_has_bits = 0;
         (void)cached_has_bits;
 
-        // .Protocol.Player player = 1;
-        if (this->_internal_has_player()) {
+        // uint64 playerIndex = 1;
+        if (this->_internal_playerindex() != 0) {
             target = stream->EnsureSpace(target);
-            target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-                InternalWriteMessage(
-                    1, _Internal::player(this), target, stream);
+            target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(1, this->_internal_playerindex(), target);
         }
 
         if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1379,11 +1357,9 @@ namespace Protocol {
         // Prevent compiler warnings about cached_has_bits being unused
         (void)cached_has_bits;
 
-        // .Protocol.Player player = 1;
-        if (this->_internal_has_player()) {
-            total_size += 1 +
-                ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-                    *player_);
+        // uint64 playerIndex = 1;
+        if (this->_internal_playerindex() != 0) {
+            total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64SizePlusOne(this->_internal_playerindex());
         }
 
         return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
@@ -1408,8 +1384,8 @@ namespace Protocol {
         uint32_t cached_has_bits = 0;
         (void)cached_has_bits;
 
-        if (from._internal_has_player()) {
-            _internal_mutable_player()->::Protocol::Player::MergeFrom(from._internal_player());
+        if (from._internal_playerindex() != 0) {
+            _internal_set_playerindex(from._internal_playerindex());
         }
         _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
     }
@@ -1428,7 +1404,7 @@ namespace Protocol {
     void C_ENTER_GAME::InternalSwap(C_ENTER_GAME* other) {
         using std::swap;
         _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-        swap(player_, other->player_);
+        swap(playerindex_, other->playerindex_);
     }
 
     ::PROTOBUF_NAMESPACE_ID::Metadata C_ENTER_GAME::GetMetadata() const {
@@ -1441,8 +1417,19 @@ namespace Protocol {
 
     class S_ENTER_GAME::_Internal {
     public:
+        static const ::Protocol::ObjectInfo& player(const S_ENTER_GAME* msg);
     };
 
+    const ::Protocol::ObjectInfo&
+        S_ENTER_GAME::_Internal::player(const S_ENTER_GAME* msg) {
+        return *msg->player_;
+    }
+    void S_ENTER_GAME::clear_player() {
+        if (GetArenaForAllocation() == nullptr && player_ != nullptr) {
+            delete player_;
+        }
+        player_ = nullptr;
+    }
     S_ENTER_GAME::S_ENTER_GAME(::PROTOBUF_NAMESPACE_ID::Arena* arena,
         bool is_message_owned)
         : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
@@ -1455,12 +1442,17 @@ namespace Protocol {
     S_ENTER_GAME::S_ENTER_GAME(const S_ENTER_GAME& from)
         : ::PROTOBUF_NAMESPACE_ID::Message() {
         _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-        success_ = from.success_;
+        if (from._internal_has_player()) {
+            player_ = new ::Protocol::ObjectInfo(*from.player_);
+        }
+        else {
+            player_ = nullptr;
+        }
         // @@protoc_insertion_point(copy_constructor:Protocol.S_ENTER_GAME)
     }
 
     inline void S_ENTER_GAME::SharedCtor() {
-        success_ = false;
+        player_ = nullptr;
     }
 
     S_ENTER_GAME::~S_ENTER_GAME() {
@@ -1472,6 +1464,7 @@ namespace Protocol {
 
     inline void S_ENTER_GAME::SharedDtor() {
         GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+        if (this != internal_default_instance()) delete player_;
     }
 
     void S_ENTER_GAME::ArenaDtor(void* object) {
@@ -1490,7 +1483,10 @@ namespace Protocol {
         // Prevent compiler warnings about cached_has_bits being unused
         (void)cached_has_bits;
 
-        success_ = false;
+        if (GetArenaForAllocation() == nullptr && player_ != nullptr) {
+            delete player_;
+        }
+        player_ = nullptr;
         _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
     }
 
@@ -1500,10 +1496,10 @@ namespace Protocol {
             uint32_t tag;
             ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
             switch (tag >> 3) {
-                // bool success = 1;
+                // .Protocol.ObjectInfo player = 1;
             case 1:
-                if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
-                    success_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+                if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+                    ptr = ctx->ParseMessage(_internal_mutable_player(), ptr);
                     CHK_(ptr);
                 }
                 else
@@ -1538,10 +1534,12 @@ namespace Protocol {
         uint32_t cached_has_bits = 0;
         (void)cached_has_bits;
 
-        // bool success = 1;
-        if (this->_internal_success() != 0) {
+        // .Protocol.ObjectInfo player = 1;
+        if (this->_internal_has_player()) {
             target = stream->EnsureSpace(target);
-            target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(1, this->_internal_success(), target);
+            target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+                InternalWriteMessage(
+                    1, _Internal::player(this), target, stream);
         }
 
         if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1560,9 +1558,11 @@ namespace Protocol {
         // Prevent compiler warnings about cached_has_bits being unused
         (void)cached_has_bits;
 
-        // bool success = 1;
-        if (this->_internal_success() != 0) {
-            total_size += 1 + 1;
+        // .Protocol.ObjectInfo player = 1;
+        if (this->_internal_has_player()) {
+            total_size += 1 +
+                ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+                    *player_);
         }
 
         return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
@@ -1587,8 +1587,8 @@ namespace Protocol {
         uint32_t cached_has_bits = 0;
         (void)cached_has_bits;
 
-        if (from._internal_success() != 0) {
-            _internal_set_success(from._internal_success());
+        if (from._internal_has_player()) {
+            _internal_mutable_player()->::Protocol::ObjectInfo::MergeFrom(from._internal_player());
         }
         _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
     }
@@ -1607,7 +1607,7 @@ namespace Protocol {
     void S_ENTER_GAME::InternalSwap(S_ENTER_GAME* other) {
         using std::swap;
         _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-        swap(success_, other->success_);
+        swap(player_, other->player_);
     }
 
     ::PROTOBUF_NAMESPACE_ID::Metadata S_ENTER_GAME::GetMetadata() const {

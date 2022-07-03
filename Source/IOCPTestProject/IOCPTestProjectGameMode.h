@@ -13,6 +13,8 @@ class AIOCPTestProjectGameMode : public AGameModeBase
 
 public:
 	AIOCPTestProjectGameMode();
+
+	virtual void BeginPlay() override;
 };
 
 

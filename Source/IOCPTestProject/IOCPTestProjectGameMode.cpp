@@ -13,3 +13,7 @@ AIOCPTestProjectGameMode::AIOCPTestProjectGameMode()
 		DefaultPawnClass = PlayerPawnBPClass.Class;
 	}
 }
+
+void AIOCPTestProjectGameMode::BeginPlay()
+{
+}
