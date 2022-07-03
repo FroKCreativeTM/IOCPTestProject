@@ -4,6 +4,9 @@
 #include "IOCPTestProjectCharacter.h"
 #include "UObject/ConstructorHelpers.h"
 
+#include "Network/GameSessionManager.h"
+#include "Network/ServerPacketHandler.h"
+
 AIOCPTestProjectGameMode::AIOCPTestProjectGameMode()
 {
 	// set default pawn class to our Blueprinted character
@@ -16,4 +19,6 @@ AIOCPTestProjectGameMode::AIOCPTestProjectGameMode()
 
 void AIOCPTestProjectGameMode::BeginPlay()
 {
+	AGameSessionManager::GetInst()->StartService();
+	AGameSessionManager::GetInst()->Dispatch();
 }

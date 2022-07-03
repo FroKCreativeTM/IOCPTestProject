@@ -30,6 +30,8 @@ public :
 	virtual void BeginPlay() override;
 	virtual void EndPlay(EEndPlayReason::Type eEndPlayType) override;
 
+	void BindObjectManager();
+
 protected :
 
 	/** Called for forwards/backward input */
@@ -72,7 +74,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Spawning")
 	TSubclassOf<class ACharacter> WhoToSpawn;
 
-public : 
+public :
 	void SetPlayerId(uint64 id) { _playerId = id; }
 	uint64 GetPlayerId() const { return _playerId; }
 

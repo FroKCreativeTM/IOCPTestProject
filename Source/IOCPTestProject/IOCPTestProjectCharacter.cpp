@@ -115,9 +115,10 @@ void AIOCPTestProjectCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	// 플레이어 캐릭터가 생성되면서, 오브젝트 매니저에 이 플레이어를 등록한다.
-	GObjectManager = MakeShared<AObjectManager>(this);
+	Protocol::C_ENTER_GAME enterPacket;
 
-	AGameSessionManager::GetInst()->StartService();
+	auto sendBuffer = FrokEngine::ServerPacketHandler::MakeSendBuffer(enterPacket);
+	AGameSessionManager::GetInst()->GetService()->Broadcast(sendBuffer);
 	AGameSessionManager::GetInst()->Dispatch();
 }
 
@@ -126,6 +127,11 @@ void AIOCPTestProjectCharacter::EndPlay(EEndPlayReason::Type eEndPlayType)
 	Super::EndPlay(eEndPlayType);
 
 	AGameSessionManager::GetInst()->CloseSocket();
+}
+
+void AIOCPTestProjectCharacter::BindObjectManager()
+{
+	GObjectManager = MakeShared<AObjectManager>(this);
 }
 
 void AIOCPTestProjectCharacter::MoveForward(float Value)
@@ -146,6 +152,8 @@ void AIOCPTestProjectCharacter::MoveForward(float Value)
 			const FVector Velocity = GetVelocity();
 
 			Protocol::C_MOVE movePkt;
+
+			movePkt.set_playerid(_playerId);
 
 			auto pos = movePkt.mutable_posinfo();
 			pos->set_posx(Position.X);
@@ -186,6 +194,8 @@ void AIOCPTestProjectCharacter::MoveRight(float Value)
 			const FVector Velocity = GetVelocity();
 
 			Protocol::C_MOVE movePkt;
+
+			movePkt.set_playerid(_playerId);
 
 			auto pos = movePkt.mutable_posinfo();
 			pos->set_posx(Position.X);

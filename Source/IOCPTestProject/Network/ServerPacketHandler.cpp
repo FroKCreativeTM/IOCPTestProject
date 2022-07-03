@@ -52,7 +52,7 @@ namespace FrokEngine
 	bool Handle_S_ENTER_GAME(PacketSessionRef& session, Protocol::S_ENTER_GAME& pkt)
 	{
 		// TODO : 이미 들어온 사람들에 대한 리스트를 받아온다.
-		GObjectManager->AddPlayer(pkt.player(), true);
+		GObjectManager->Add(pkt.player(), true);
 
 		return true;
 	}
@@ -73,6 +73,13 @@ namespace FrokEngine
 
 	bool Handle_S_SPAWN(PacketSessionRef& session, Protocol::S_SPAWN& pkt)
 	{
+		// 모든 스폰된 데이터를 가져온다.
+		for (auto object : pkt.objects())
+		{
+			// false로 둬야함!
+			GObjectManager->Add(object, false);
+		}
+
 		return false;
 	}
 
@@ -86,8 +93,6 @@ namespace FrokEngine
 
 		// 이 액터의 position, rotation, velocity를 세팅한다.
 		Protocol::PosInfo posInfo = pkt.posinfo();
-
-		
 
 		return true;
 	}
