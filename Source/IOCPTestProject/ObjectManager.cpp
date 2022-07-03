@@ -29,7 +29,7 @@ void AObjectManager::AddPlayer(Protocol::ObjectInfo objectInfo, bool myPlayer)
 	{
 		if (myPlayer)
 		{
-			_myPlayer->Rename(TEXT("%s", objectInfo.name().c_str()));
+			_myPlayer->Rename(*FString(objectInfo.name().c_str()));
 			_myPlayer->SetPlayerId(objectInfo.objectid());
 			_object.Add(objectInfo.objectid(), _myPlayer);
 		}

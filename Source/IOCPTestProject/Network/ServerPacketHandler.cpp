@@ -57,11 +57,6 @@ namespace FrokEngine
 		return true;
 	}
 
-	bool Handle_S_CURRENT_PLAYER_INFO(PacketSessionRef& session, Protocol::S_CURRENT_PLAYER_INFO& pkt)
-	{
-		return true;
-	}
-
 	bool Handle_S_CHAT(PacketSessionRef& session, Protocol::S_CHAT& pkt)
 	{
 		// (서버 상에서 특정 long long type으로 등록된) 어떤 아이디를 가진 유저가
@@ -74,6 +69,11 @@ namespace FrokEngine
 		string chat = pkt.msg();
 
 		return true;
+	}
+
+	bool Handle_S_SPAWN(PacketSessionRef& session, Protocol::S_SPAWN& pkt)
+	{
+		return false;
 	}
 
 	bool Handle_S_MOVE(PacketSessionRef& session, Protocol::S_MOVE& pkt)
