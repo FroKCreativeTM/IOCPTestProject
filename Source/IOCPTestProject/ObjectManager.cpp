@@ -27,7 +27,7 @@ void AObjectManager::Add(Protocol::ObjectInfo objectInfo, bool myPlayer)
 
 	if (myPlayer)
 	{
-		ABLOG(Warning, TEXT("Actor ID : %s"), objectInfo.objectid());
+		ABLOG_S(Warning);
 		_myPlayer->Rename(*FString(objectInfo.name().c_str()));
 		_myPlayer->SetPlayerId(objectInfo.objectid());
 		_object.Add(objectInfo.objectid(), _myPlayer);
@@ -36,6 +36,7 @@ void AObjectManager::Add(Protocol::ObjectInfo objectInfo, bool myPlayer)
 	}
 	else
 	{
+		ABLOG_S(Warning);
 		// 새로운 플레이어를 필드에 스폰
 		// 새로 스폰한 애는 x : 550 y :950 정도에 스폰(z는 50)
 		FVector SpawnLocation;

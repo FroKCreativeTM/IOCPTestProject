@@ -23,6 +23,8 @@ public :
 	// protocol 수정할 필요 있음
 	void Add(Protocol::ObjectInfo objectInfo, bool myPlayer = false);
 
+	class AIOCPTestProjectCharacter* GetMyPlayer() { return _myPlayer; }
+
 private : 
 	// 내가 어떤 캐릭을 들고 있는가.
 	class AIOCPTestProjectCharacter* _myPlayer;

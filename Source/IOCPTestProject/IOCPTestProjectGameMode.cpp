@@ -20,5 +20,16 @@ AIOCPTestProjectGameMode::AIOCPTestProjectGameMode()
 void AIOCPTestProjectGameMode::BeginPlay()
 {
 	AGameSessionManager::GetInst()->StartService();
+
+	// 플레이어 캐릭터가 생성되면서, 오브젝트 매니저에 이 플레이어를 등록한다.
+	Protocol::C_LOGIN loginPacket;
+	auto sendBuffer = FrokEngine::ServerPacketHandler::MakeSendBuffer(loginPacket);
+	AGameSessionManager::GetInst()->GetService()->Broadcast(sendBuffer);
 	AGameSessionManager::GetInst()->Dispatch();
+	// AGameSessionManager::GetInst()->Dispatch();
+}
+
+void AIOCPTestProjectGameMode::EndPlay(EEndPlayReason::Type eEndPlayReasonType)
+{
+	AGameSessionManager::GetInst()->CloseSocket();
 }

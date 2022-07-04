@@ -59,7 +59,7 @@ AIOCPTestProjectCharacter::AIOCPTestProjectCharacter()
 
 AIOCPTestProjectCharacter::~AIOCPTestProjectCharacter()
 {
-	AGameSessionManager::GetInst()->CloseSocket();
+	
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -113,6 +113,8 @@ void AIOCPTestProjectCharacter::LookUpAtRate(float Rate)
 void AIOCPTestProjectCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	ABLOG_S(Warning);
 
 	// 플레이어 캐릭터가 생성되면서, 오브젝트 매니저에 이 플레이어를 등록한다.
 	Protocol::C_ENTER_GAME enterPacket;

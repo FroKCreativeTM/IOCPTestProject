@@ -15,6 +15,7 @@ public:
 	AIOCPTestProjectGameMode();
 
 	virtual void BeginPlay() override;
+	virtual void EndPlay(EEndPlayReason::Type eEndPlayReasonType) override;
 };
 
 
